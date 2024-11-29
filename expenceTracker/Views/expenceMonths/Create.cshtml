@@ -1,0 +1,46 @@
+﻿@model expenceTracker.Models.expenceMonth
+
+@{
+    ViewData["Title"] = "Create";
+    //https://localhost:7267/expenceMonths
+}
+
+<h1 class="text-center">Create</h1>
+
+<h4 class="text-center">Predicted Monthly Expense</h4>
+<hr />
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card-body" style="max-width: 500px; width: 100%;">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="name" class="control-label"></label>
+                <input asp-for="name" class="form-control" />
+                <span asp-validation-for="name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="predictedCost" class="control-label"></label>
+                <input asp-for="predictedCost" class="form-control" />
+                <span asp-validation-for="predictedCost" class="text-danger"></span>
+            </div>
+
+            <input asp-for="profileId" class="form-control" type="hidden" value="1" />
+
+            <div class="form-group">
+                <label asp-for="dateDue" class="control-label"></label>
+                <input asp-for="dateDue" class="form-control" />
+                <span asp-validation-for="dateDue" class="text-danger"></span>
+            </div>
+            <div class="form-group text-center">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+        <div class="text-center mt-3">
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
