@@ -1,9 +1,17 @@
-﻿namespace expenceTracker.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace expenceTracker.Models
 {
     public class User
     {
-        public string Id { get; set; }
+
+        [Key]
+        public int Id { get; set; }
+        [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }
+
+        [EmailAddress]
+        [Required(ErrorMessage ="Email is required")]
         public string Email { get; set; }
     }
 }
