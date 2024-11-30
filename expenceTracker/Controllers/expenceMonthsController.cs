@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using expenceTracker.Data;
 using expenceTracker.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 //https://localhost:7267/expenceMonths
 
@@ -155,5 +156,65 @@ namespace expenceTracker.Controllers
         {
             return _context.expenceMonths.Any(e => e.Id == id);
         }
+
+
+
+
+        // cotnrolelrs below this line are for the actual expences side of things
+
+
+
+        // GET: actualExpences/Create
+        [HttpGet("ResolveExpence/{id}/{profileId}/{predictedCost}")]
+        public IActionResult ResolveExpence(int id, int profileId, double predictedCost ) // first int is from expenceId second is from 
+        {
+
+            ViewBag.profileId = profileId;
+            ViewBag.expenceId = id;
+            ViewBag.finalCost = predictedCost;
+            return View();
+        }
+
+
+        [HttpPost("ResolveExpence/{id}/{profileId}/{predictedCost}")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResolveExpence([Bind("finalCost,profileId,expenceID,category,datePayed")] actualExpence actualExpence)
+        {
+
+
+            if (ModelState.IsValid)
+            {
+                _context.Add(actualExpence);
+                await _context.SaveChangesAsync();
+                
+                return RedirectToAction(nameof(Index));
+            }
+            return View(actualExpence);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
+
+
+
+
+
+
+
+
+
+
 }
