@@ -24,6 +24,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.dateDue)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dateDue)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -47,6 +50,7 @@
                     <a asp-action="ResolveExpence" asp-route-id="@item.Id" asp-route-profileId="@item.profileId" asp-route-predictedCost="@item.predictedCost">Resolve Expence</a>
             </td>
         </tr>
-}
+        }
+        <a asp-action="expenceMonthView"> View resolved expences</a>
     </tbody>
 </table>

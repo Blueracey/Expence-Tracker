@@ -18,12 +18,12 @@
                 <input asp-for="finalCost" class="form-control" value="@ViewBag.finalCost" />
                 <span asp-validation-for="finalCost" class="text-danger"></span>
             </div>
-           
+
                 <input type="hidden" asp-for="profileId" class="form-control" value="@ViewBag.profileId" />
-              
-            
+
+
                 <input type="hidden" asp-for="expenceID" class="form-control" value="@ViewBag.expenceId" />
-                
+
             <div class="form-group">
                 <label asp-for="category" class="control-label"></label>
                 <input asp-for="category" class="form-control" />        
@@ -46,5 +46,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

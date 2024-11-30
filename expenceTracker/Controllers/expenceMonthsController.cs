@@ -192,17 +192,123 @@ namespace expenceTracker.Controllers
             return View(actualExpence);
         }
 
+        // data call for resolved expences
+        public async Task<IActionResult> expenceMonthView()
+        {
+            return View(await _context.actualExpences.ToListAsync());
+        }
+
+        // GET: actualExpences/Delete/5
+        public async Task<IActionResult> expenceFinalDelete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var actualExpence = await _context.actualExpences
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (actualExpence == null)
+            {
+                return NotFound();
+            }
+
+            return View(actualExpence);
+        }
+
+
+        // POST: actualExpences/Delete/5
+        [HttpPost, ActionName("DeleteExpenceHistory")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteExpenceHistory(int id)
+        {
+            var actualExpence = await _context.actualExpences.FindAsync(id);
+            if (actualExpence != null)
+            {
+                _context.actualExpences.Remove(actualExpence);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
 
 
 
+        // details display controller
+        public async Task<IActionResult> FinalDetails(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var actualExpence = await _context.actualExpences
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (actualExpence == null)
+            {
+                return NotFound();
+            }
+
+            return View(actualExpence);
+        }
 
 
 
+        // visual for edit 
+        public async Task<IActionResult> FinalEdit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var actualExpence = await _context.actualExpences.FindAsync(id);
+            if (actualExpence == null)
+            {
+                return NotFound();
+            }
+            return View(actualExpence);
+        }
+
+        //actual action for edit 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> FinalEditUpdate(int id, [Bind("Id,finalCost,profileId,expenceID,category,datePayed")] actualExpence actualExpence)
+        {
+            if (id != actualExpence.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(actualExpence);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!actualExpenceExists(actualExpence.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(actualExpence));
+            }
+            return View(actualExpence);
+        }
 
 
 
-
-
+        private bool actualExpenceExists(int id)
+        {
+            return _context.actualExpences.Any(e => e.Id == id);
+        }
 
 
 
