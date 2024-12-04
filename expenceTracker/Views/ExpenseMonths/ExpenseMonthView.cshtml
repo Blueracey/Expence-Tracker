@@ -1,0 +1,49 @@
+﻿@model IEnumerable<ExpenseTracker.Models.ActualExpense>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Expense History</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FinalCost)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DatePaid)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FinalCost)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DatePaid)
+                </td>
+                <td>
+
+                    <a asp-action="FinalDetails" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="ExpenseFinalDelete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+        <a asp-action="Index">Return to Prediction</a>
+    </tbody>
+</table>

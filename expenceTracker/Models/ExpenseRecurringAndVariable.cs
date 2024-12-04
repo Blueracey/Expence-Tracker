@@ -2,21 +2,21 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 
-namespace expenceTracker.Models
+namespace ExpenseTracker.Models
 {
-    public class expenceRecurringAndVariable
+    public class ExpenseRecurringAndVariable
     {
         [Key]
         public int Id { get; set; }
         [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }
         [Required(ErrorMessage = "Cost is required")]
-        public double cost { get; set; }
+        public double Cost { get; set; }
         [AllowNull]
-        public string? frequency { get; set; }
+        public string? Frequency { get; set; }
 
-        [ForeignKey("profileId")]
-        userProfile userProfile { get; set; }
+        [ForeignKey("ProfileId")]
+        UserProfile UserProfile { get; set; }
 
     }
 }

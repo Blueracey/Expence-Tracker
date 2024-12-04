@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace expenceTracker.Models
+namespace ExpenseTracker.Models
 {
     public class User
     {

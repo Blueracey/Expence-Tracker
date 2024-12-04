@@ -1,0 +1,57 @@
+﻿@model IEnumerable<ExpenseTracker.Models.ExpenseMonth>
+
+@{
+    ViewData["Title"] = "Predicted Expenses";
+    //https://localhost:7267/ActualExpenses
+    //https://localhost:7267/ExpenseMonths
+}
+
+<h1>Predicted Expenses</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PredictedCost)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.DateDue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateDue)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PredictedCost)$
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateDue)
+                </td>
+                <td>
+
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
+                    <a asp-action="ResolveExpense" asp-route-id="@item.Id" asp-route-ProfileId="@item.ProfileId" asp-route-PredictedCost="@item.PredictedCost">Resolve Expense</a>
+                </td>
+            </tr>
+        }
+        <a asp-action="ExpenseMonthView"> View resolved Expenses</a>
+    </tbody>
+</table>

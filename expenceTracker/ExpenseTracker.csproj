@@ -20,14 +20,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Views\expenceMonths\expenceMonthView.cshtml">
+    <Content Update="Views\ExpenseMonths\ExpenseMonthView.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\expenceMonths\actualExpences\" />
+    <Folder Include="Views\ExpenseMonths\actualExpences\" />
   </ItemGroup>
 
 </Project>

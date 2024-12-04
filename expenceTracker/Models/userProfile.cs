@@ -1,17 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace expenceTracker.Models
+namespace ExpenseTracker.Models
 {
-    public class userProfile
+    public class UserProfile
     {
         [Key]
         public int Id { get; set; }
         public bool Darkmode { get; set; }
-        public int userId { get; set; }
+        public int UserId { get; set; }
 
-        [ForeignKey("userId")]
+        [ForeignKey("UserId")]
         public User User { get; set; }
-        
+
     }
 }
