@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ExpenseTracker.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,15 +17,31 @@ namespace ExpenseTracker.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FinalCost = table.Column<double>(type: "float", nullable: true),
-                    ProfileId = table.Column<int>(type: "int", nullable: false),
-                    ExpenseId = table.Column<int>(type: "int", nullable: false),
-                    Category = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DatePaid = table.Column<DateOnly>(type: "date", nullable: false)
+                    finalCost = table.Column<double>(type: "float", nullable: true),
+                    profileId = table.Column<int>(type: "int", nullable: false),
+                    expenseId = table.Column<int>(type: "int", nullable: false),
+                    category = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    datePaid = table.Column<DateOnly>(type: "date", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ActualExpenses", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ExpenseMonths",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    predictedCost = table.Column<double>(type: "float", nullable: false),
+                    profileId = table.Column<double>(type: "float", nullable: false),
+                    dateDue = table.Column<DateOnly>(type: "date", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExpenseMonths", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -34,9 +50,9 @@ namespace ExpenseTracker.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Cost = table.Column<double>(type: "float", nullable: false),
-                    Frequency = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    cost = table.Column<double>(type: "float", nullable: false),
+                    frequency = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -64,50 +80,23 @@ namespace ExpenseTracker.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Darkmode = table.Column<bool>(type: "bit", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    userId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserProfiles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserProfiles_Users_UserId",
-                        column: x => x.UserId,
+                        name: "FK_UserProfiles_Users_userId",
+                        column: x => x.userId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "ExpenseMonths",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PredictedCost = table.Column<double>(type: "float", nullable: false),
-                    ProfileId = table.Column<int>(type: "int", nullable: false),
-                    DateDue = table.Column<DateOnly>(type: "date", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ExpenseMonths", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ExpenseMonths_UserProfiles_ProfileId",
-                        column: x => x.ProfileId,
-                        principalTable: "UserProfiles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
-                name: "IX_ExpenseMonths_ProfileId",
-                table: "ExpenseMonths",
-                column: "ProfileId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserProfiles_UserId",
+                name: "IX_UserProfiles_userId",
                 table: "UserProfiles",
-                column: "UserId");
+                column: "userId");
         }
 
         /// <inheritdoc />

@@ -8,24 +8,26 @@ namespace ExpenseTracker.Models
     {
         [Key]
         public int Id { get; set; }
-        [AllowNull]
-        public double? FinalCost { get; set; }
-
-        public int ProfileId { get; set; }
-
-        [ForeignKey("ProfileId")]
-        UserProfile UserProfile { get; set; }
-
-        public int ExpenseId { get; set; }
-
-        [ForeignKey("ExpenseId")]
-        ExpenseMonth ExpenseMonth { get; set; }
 
         [AllowNull]
-        public string? Category { get; set; }
+        public double? finalCost { get; set; }
+
+        public int profileId { get; set; }
+
+        [ForeignKey("profileId")]
+        UserProfile userProfile { get; set; }
+
+        public int expenseId { get; set; }
+
+        [ForeignKey("expenseId")]
+        ExpenseMonth expenseMonth { get; set; }
+
+        [AllowNull]
+        public string? category { get; set; }
+
         [Required]
-        [DataType(DataType.Date, ErrorMessage = "invalid Date")]
-        public DateOnly DatePaid { get; set; }
+        [DataType(DataType.Date, ErrorMessage = "Invalid Date")]
+        public DateOnly datePaid { get; set; }
 
     }
 }

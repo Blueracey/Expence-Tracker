@@ -10,19 +10,19 @@ namespace ExpenseTracker.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
-        public required string Name { get; set; }
+        public string name { get; set; }
+
         [Required(ErrorMessage = "Cost is required")]
-        public required double PredictedCost { get; set; }
+        public double predictedCost { get; set; }
 
-
-        public int ProfileId { get; set; }
-        [ForeignKey("ProfileId")]
-        public UserProfile UserProfile { get; set; }
+        public double profileId { get; set; }
+        [ForeignKey("profileId")]
+        UserProfile userProfile { get; set; }
 
         [Required(ErrorMessage = "Date is required")]
         [DataType(DataType.Date)]
 
-        public required DateOnly DateDue { get; set; }
+        public DateOnly dateDue { get; set; }
 
     }
 }

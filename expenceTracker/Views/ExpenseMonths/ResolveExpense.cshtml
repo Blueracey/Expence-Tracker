@@ -14,25 +14,25 @@
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="FinalCost" class="control-label">Final Cost</label>
-                <input asp-for="FinalCost" class="form-control" value="@ViewBag.FinalCost" />
-                <span asp-validation-for="FinalCost" class="text-danger"></span>
+                <label asp-for="finalCost" class="control-label">Final Cost</label>
+                <input asp-for="finalCost" class="form-control" value="@ViewBag.finalCost" />
+                <span asp-validation-for="finalCost" class="text-danger"></span>
             </div>
 
-            <input type="hidden" asp-for="ProfileId" class="form-control" value="@ViewBag.ProfileId" />
+            <input type="hidden" asp-for="profileId" class="form-control" value="@ViewBag.profileId" />
 
 
-            <input type="hidden" asp-for="ExpenseId" class="form-control" value="@ViewBag.ExpenseId" />
+            <input type="hidden" asp-for="expenseId" class="form-control" value="@ViewBag.expenseId" />
 
             <div class="form-group">
-                <label asp-for="Category" class="control-label"></label>
-                <input asp-for="Category" class="form-control" />
-                <span asp-validation-for="Category" class="text-danger"></span>
+                <label asp-for="category" class="control-label"></label>
+                <input asp-for="category" class="form-control" />
+                <span asp-validation-for="category" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DatePaid" class="control-label">Date entered</label>
-                <input asp-for="DatePaid" class="form-control" />
-                <span asp-validation-for="DatePaid" class="text-danger"></span>
+                <label asp-for="datePaid" class="control-label">Date entered</label>
+                <input asp-for="datePaid" class="form-control" />
+                <span asp-validation-for="datePaid" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="ResolveExpense" class="btn btn-primary" />

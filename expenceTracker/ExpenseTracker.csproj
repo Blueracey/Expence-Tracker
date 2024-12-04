@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\ExpenseMonths\actualExpences\**" />
+    <Content Remove="Views\ExpenseMonths\actualExpences\**" />
+    <EmbeddedResource Remove="Views\ExpenseMonths\actualExpences\**" />
+    <None Remove="Views\ExpenseMonths\actualExpences\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -24,10 +31,6 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\ExpenseMonths\actualExpences\" />
   </ItemGroup>
 
 </Project>

@@ -30,19 +30,19 @@ namespace ExpenseTracker.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Category")
+                    b.Property<string>("category")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateOnly>("DatePaid")
+                    b.Property<DateOnly>("datePaid")
                         .HasColumnType("date");
 
-                    b.Property<int>("ExpenseId")
+                    b.Property<int>("expenseId")
                         .HasColumnType("int");
 
-                    b.Property<double?>("FinalCost")
+                    b.Property<double?>("finalCost")
                         .HasColumnType("float");
 
-                    b.Property<int>("ProfileId")
+                    b.Property<int>("profileId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -58,22 +58,20 @@ namespace ExpenseTracker.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateOnly>("DateDue")
+                    b.Property<DateOnly>("dateDue")
                         .HasColumnType("date");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("PredictedCost")
+                    b.Property<double>("predictedCost")
                         .HasColumnType("float");
 
-                    b.Property<int>("ProfileId")
-                        .HasColumnType("int");
+                    b.Property<double>("profileId")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProfileId");
 
                     b.ToTable("ExpenseMonths");
                 });
@@ -86,13 +84,13 @@ namespace ExpenseTracker.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<double>("Cost")
+                    b.Property<double>("cost")
                         .HasColumnType("float");
 
-                    b.Property<string>("Frequency")
+                    b.Property<string>("frequency")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -133,36 +131,25 @@ namespace ExpenseTracker.Migrations
                     b.Property<bool>("Darkmode")
                         .HasColumnType("bit");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("userId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("userId");
 
                     b.ToTable("UserProfiles");
                 });
 
-            modelBuilder.Entity("ExpenseTracker.Models.ExpenseMonth", b =>
-                {
-                    b.HasOne("ExpenseTracker.Models.UserProfile", "UserProfile")
-                        .WithMany()
-                        .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("UserProfile");
-                });
-
             modelBuilder.Entity("ExpenseTracker.Models.UserProfile", b =>
                 {
-                    b.HasOne("ExpenseTracker.Models.User", "User")
+                    b.HasOne("ExpenseTracker.Models.User", "user")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("userId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("user");
                 });
 #pragma warning restore 612, 618
         }

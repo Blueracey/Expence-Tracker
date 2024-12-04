@@ -2,8 +2,6 @@
 
 @{
     ViewData["Title"] = "Predicted Expenses";
-    //https://localhost:7267/ActualExpenses
-    //https://localhost:7267/ExpenseMonths
 }
 
 <h1>Predicted Expenses</h1>
@@ -15,17 +13,17 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PredictedCost)
+                @Html.DisplayNameFor(model => model.predictedCost)
             </th>
 
             <th>
-                @Html.DisplayNameFor(model => model.DateDue)
+                @Html.DisplayNameFor(model => model.dateDue)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DateDue)
+                @Html.DisplayNameFor(model => model.dateDue)
             </th>
             <th></th>
         </tr>
@@ -35,20 +33,20 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    @Html.DisplayFor(modelItem => item.name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.PredictedCost)$
+                    @Html.DisplayFor(modelItem => item.predictedCost)$
                 </td>
 
                 <td>
-                    @Html.DisplayFor(modelItem => item.DateDue)
+                    @Html.DisplayFor(modelItem => item.dateDue)
                 </td>
                 <td>
 
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                     <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
-                    <a asp-action="ResolveExpense" asp-route-id="@item.Id" asp-route-ProfileId="@item.ProfileId" asp-route-PredictedCost="@item.PredictedCost">Resolve Expense</a>
+                    <a asp-action="ResolveExpense" asp-route-id="@item.Id" asp-route-ProfileId="@item.profileId" asp-route-PredictedCost="@item.predictedCost">Resolve Expense</a>
                 </td>
             </tr>
         }

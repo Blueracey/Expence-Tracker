@@ -8,10 +8,10 @@ namespace ExpenseTracker.Models
         [Key]
         public int Id { get; set; }
         public bool Darkmode { get; set; }
-        public int UserId { get; set; }
+        public int userId { get; set; }
 
-        [ForeignKey("UserId")]
-        public User User { get; set; }
+        [ForeignKey("userId")]
+        public User user { get; set; }
 
     }
 }

@@ -57,7 +57,7 @@ namespace ExpenseTracker.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,name,predictedCost,profileId,dateDue")] ExpenseMonth ExpenseMonth)
+        public async Task<IActionResult> Create([Bind("id,name,predictedCost,profileId,dateDue")] ExpenseMonth ExpenseMonth)
         {
             if (ModelState.IsValid)
             {
@@ -89,7 +89,7 @@ namespace ExpenseTracker.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,name,predictedCost,profileId,dateDue")] ExpenseMonth ExpenseMonth)
+        public async Task<IActionResult> Edit(int id, [Bind("id,name,predictedCost,profileId,dateDue")] ExpenseMonth ExpenseMonth)
         {
             if (id != ExpenseMonth.Id)
             {
@@ -169,16 +169,16 @@ namespace ExpenseTracker.Controllers
         public IActionResult ResolveExpense(int id, int profileId, double predictedCost) // first int is from ExpenseId second is from 
         {
 
-            ViewBag.profileId = profileId;
+            ViewBag.ProfileId = profileId;
             ViewBag.ExpenseId = id;
-            ViewBag.finalCost = predictedCost;
+            ViewBag.FinalCost = predictedCost;
             return View();
         }
 
 
         [HttpPost("ResolveExpense/{id}/{profileId}/{predictedCost}")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ResolveExpense([Bind("finalCost,profileId,ExpenseID,category,datePayed")] ActualExpense ActualExpense)
+        public async Task<IActionResult> ResolveExpense([Bind("finalCost,profileId,expenseId,category,datePaid")] ActualExpense ActualExpense)
         {
 
 
@@ -273,7 +273,7 @@ namespace ExpenseTracker.Controllers
         //actual action for edit 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> FinalEditUpdate(int id, [Bind("Id,finalCost,profileId,ExpenseID,category,datePayed")] ActualExpense ActualExpense)
+        public async Task<IActionResult> FinalEditUpdate(int id, [Bind("id,finalCost,profileId,expenseId,category,datePaid")] ActualExpense ActualExpense)
         {
             if (id != ActualExpense.Id)
             {
