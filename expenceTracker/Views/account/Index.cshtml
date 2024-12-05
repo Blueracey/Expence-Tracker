@@ -1,0 +1,32 @@
+﻿
+
+@{
+    ViewData["Title"] = "Home";
+    //https://localhost:7267/account/Register
+}
+
+<h1 class="text-center">Register</h1>
+
+
+<hr />
+<div class="d-flex justify-content-center align-items-center" style="min-height: auto;">
+    <div class="card-body" style="max-width: 700px; width: 100%;">
+       
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="account" asp-action="Register">Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="account" asp-action="Login">Login</a>
+        </li>
+        
+
+        <div class="text-center mt-3">
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
