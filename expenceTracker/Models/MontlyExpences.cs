@@ -16,7 +16,7 @@ namespace expenceTracker.Models
 
         [ForeignKey("userId")]
 
-        public User User { get; set; }
+         User User { get; set; }
 
 
         [Required(ErrorMessage = "Budget is required")]

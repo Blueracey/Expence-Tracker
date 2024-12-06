@@ -18,10 +18,12 @@ namespace expenceTracker.Models
         public int userId { get; set; }
 
         [ForeignKey("userId")]
-        public User User { get; set; }
+         User User { get; set; }
 
 
-        public int expenceID { get; set; }
+
+
+        public int expenceId { get; set; }
 
         [ForeignKey("expenceId")]
         expectedExpences expenceMonth { get; set; }

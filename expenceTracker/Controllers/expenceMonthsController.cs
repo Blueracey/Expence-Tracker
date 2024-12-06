@@ -49,6 +49,8 @@ namespace expenceTracker.Controllers
         // GET: expenceMonths/Create
         public IActionResult Create()
         {
+            System.Diagnostics.Debug.WriteLine("create");
+
             return View();
         }
 
@@ -57,10 +59,18 @@ namespace expenceTracker.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,name,predictedCost,profileId,dateDue")] expectedExpences expectedExpence)
+        public async Task<IActionResult> Create([Bind("Id,name,predictedCost,userId,dateDue,expenceId")] expectedExpences expectedExpence)
         {
+
+
+            
+            System.Diagnostics.Debug.WriteLine("__________");
+            System.Diagnostics.Debug.WriteLine(ModelState.IsValid);
+            System.Diagnostics.Debug.WriteLine("__________");
+
             if (ModelState.IsValid)
             {
+                System.Diagnostics.Debug.WriteLine("Model is correct");
                 _context.Add(expectedExpence);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
