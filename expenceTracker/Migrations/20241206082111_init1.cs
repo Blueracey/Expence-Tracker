@@ -34,7 +34,7 @@ namespace expenceTracker.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     finalCost = table.Column<double>(type: "float", nullable: true),
                     userId = table.Column<int>(type: "int", nullable: false),
-                    expenceID = table.Column<int>(type: "int", nullable: false),
+                    expenceId = table.Column<int>(type: "int", nullable: false),
                     category = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     datePayed = table.Column<DateOnly>(type: "date", nullable: false)
                 },
@@ -58,7 +58,7 @@ namespace expenceTracker.Migrations
                     name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     predictedCost = table.Column<double>(type: "float", nullable: false),
                     userId = table.Column<int>(type: "int", nullable: false),
-                    expenceID = table.Column<int>(type: "int", nullable: false),
+                    expenceId = table.Column<int>(type: "int", nullable: false),
                     dateDue = table.Column<DateOnly>(type: "date", nullable: false)
                 },
                 constraints: table =>

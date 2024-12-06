@@ -12,8 +12,8 @@ using expenceTracker.Data;
 namespace expenceTracker.Migrations
 {
     [DbContext(typeof(AppDatabaseContext))]
-    [Migration("20241206063731_init1")]
-    partial class init1
+    [Migration("20241206091539_init2")]
+    partial class init2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -64,7 +64,7 @@ namespace expenceTracker.Migrations
                     b.Property<DateOnly>("datePayed")
                         .HasColumnType("date");
 
-                    b.Property<int>("expenceID")
+                    b.Property<int>("expenceId")
                         .HasColumnType("int");
 
                     b.Property<double?>("finalCost")
@@ -74,8 +74,6 @@ namespace expenceTracker.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("userId");
 
                     b.ToTable("actualExpences");
                 });
@@ -91,7 +89,7 @@ namespace expenceTracker.Migrations
                     b.Property<DateOnly>("dateDue")
                         .HasColumnType("date");
 
-                    b.Property<int>("expenceID")
+                    b.Property<int>("expenceId")
                         .HasColumnType("int");
 
                     b.Property<string>("name")
@@ -105,8 +103,6 @@ namespace expenceTracker.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("userId");
 
                     b.ToTable("expectedExpence");
                 });
@@ -130,42 +126,7 @@ namespace expenceTracker.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("userId");
-
                     b.ToTable("monthlyExpence");
-                });
-
-            modelBuilder.Entity("expenceTracker.Models.actualExpence", b =>
-                {
-                    b.HasOne("expenceTracker.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("userId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("expenceTracker.Models.expectedExpences", b =>
-                {
-                    b.HasOne("expenceTracker.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("userId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("expenceTracker.Models.monthlyExpence", b =>
-                {
-                    b.HasOne("expenceTracker.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("userId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }
