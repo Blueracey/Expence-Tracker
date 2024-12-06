@@ -15,7 +15,7 @@ namespace expenceTracker.Data
 
         public DbSet<User> Users    { get; set; }
 
-        public DbSet<userProfile> userProfiles { get; set; }
+
 
     }
 }

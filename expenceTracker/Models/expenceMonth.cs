@@ -15,9 +15,10 @@ namespace expenceTracker.Models
         public double predictedCost { get; set; }
 
 
-        public double profileId {  get; set; }
-        [ForeignKey("profileId")]
-        userProfile userProfile { get; set; }
+        public int userId { get; set; }
+
+        [ForeignKey("userId")]
+        public User User { get; set; }
 
         [Required(ErrorMessage = "Date is required")]
         [DataType(DataType.Date)]

@@ -11,10 +11,10 @@ namespace expenceTracker.Models
         [AllowNull]
         public double? finalCost { get; set; }
 
-        public int profileId { get; set; }
+        public int userId { get; set; }
 
-        [ForeignKey("profileId")]
-        userProfile userProfile { get; set; }
+        [ForeignKey("userId")]
+        public User User { get; set; }
 
         public int expenceID { get; set; }
 

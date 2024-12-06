@@ -47,7 +47,7 @@
 
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
-                    <a asp-action="ResolveExpence" asp-route-id="@item.Id" asp-route-profileId="@item.profileId" asp-route-predictedCost="@item.predictedCost">Resolve Expence</a>
+                    <a asp-action="ResolveExpence" asp-route-id="@item.Id" asp-route-profileId="@item.userId" asp-route-predictedCost="@item.predictedCost">Resolve Expence</a>
             </td>
         </tr>
         }
