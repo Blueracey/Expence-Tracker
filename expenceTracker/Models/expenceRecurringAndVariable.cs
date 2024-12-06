@@ -15,8 +15,10 @@ namespace expenceTracker.Models
         [AllowNull]
         public string? frequency { get; set; }
 
-        [ForeignKey("profileId")]
-        userProfile userProfile { get; set; }
+        public int userId { get; set; }
+
+        [ForeignKey("userId")]
+        public User User { get; set; }
 
     }
 }

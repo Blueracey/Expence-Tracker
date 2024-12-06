@@ -67,10 +67,12 @@ namespace expenceTracker.Migrations
                     b.Property<double?>("finalCost")
                         .HasColumnType("float");
 
-                    b.Property<int>("profileId")
+                    b.Property<int>("userId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("userId");
 
                     b.ToTable("actualExpences");
                 });
@@ -93,10 +95,12 @@ namespace expenceTracker.Migrations
                     b.Property<double>("predictedCost")
                         .HasColumnType("float");
 
-                    b.Property<double>("profileId")
-                        .HasColumnType("float");
+                    b.Property<int>("userId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("userId");
 
                     b.ToTable("expenceMonths");
                 });
@@ -119,22 +123,6 @@ namespace expenceTracker.Migrations
                     b.Property<string>("frequency")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("expenceRecurringAndVariables");
-                });
-
-            modelBuilder.Entity("expenceTracker.Models.userProfile", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Darkmode")
-                        .HasColumnType("bit");
-
                     b.Property<int>("userId")
                         .HasColumnType("int");
 
@@ -142,10 +130,32 @@ namespace expenceTracker.Migrations
 
                     b.HasIndex("userId");
 
-                    b.ToTable("userProfiles");
+                    b.ToTable("expenceRecurringAndVariables");
                 });
 
-            modelBuilder.Entity("expenceTracker.Models.userProfile", b =>
+            modelBuilder.Entity("expenceTracker.Models.actualExpence", b =>
+                {
+                    b.HasOne("expenceTracker.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("userId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("expenceTracker.Models.expenceMonth", b =>
+                {
+                    b.HasOne("expenceTracker.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("userId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("expenceTracker.Models.expenceRecurringAndVariable", b =>
                 {
                     b.HasOne("expenceTracker.Models.User", "User")
                         .WithMany()

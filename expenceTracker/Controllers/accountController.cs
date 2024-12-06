@@ -25,6 +25,11 @@ namespace expenceTracker.Controllers
             return View();
         }
 
+        public IActionResult Index()
+        {
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Register(userRegisterDTO dto)
         {
@@ -69,7 +74,7 @@ namespace expenceTracker.Controllers
 
 
 
-            return Ok(new {Token  = token});
+            return RedirectToAction("Index", "expenceMonths");
         }
 
 
