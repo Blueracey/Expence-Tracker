@@ -25,7 +25,7 @@ namespace expenceTracker.Controllers
         // GET: expenceMonths
         public async Task<IActionResult> Index()
         {
-            return View(await _context.expenceMonths.ToListAsync());
+            return View(await _context.expectedExpence.ToListAsync());
         }
 
         // GET: expenceMonths/Details/5
@@ -36,14 +36,14 @@ namespace expenceTracker.Controllers
                 return NotFound();
             }
 
-            var expenceMonth = await _context.expenceMonths
+            var expectedExpence = await _context.expectedExpence
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (expenceMonth == null)
+            if (expectedExpence == null)
             {
                 return NotFound();
             }
 
-            return View(expenceMonth);
+            return View(expectedExpence);
         }
 
         // GET: expenceMonths/Create
@@ -57,15 +57,15 @@ namespace expenceTracker.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,name,predictedCost,profileId,dateDue")] expenceMonth expenceMonth)
+        public async Task<IActionResult> Create([Bind("Id,name,predictedCost,profileId,dateDue")] expectedExpences expectedExpence)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(expenceMonth);
+                _context.Add(expectedExpence);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(expenceMonth);
+            return View(expectedExpence);
         }
 
         // GET: expenceMonths/Edit/5
@@ -76,12 +76,12 @@ namespace expenceTracker.Controllers
                 return NotFound();
             }
 
-            var expenceMonth = await _context.expenceMonths.FindAsync(id);
-            if (expenceMonth == null)
+            var expectedExpence = await _context.expectedExpence.FindAsync(id);
+            if (expectedExpence == null)
             {
                 return NotFound();
             }
-            return View(expenceMonth);
+            return View(expectedExpence);
         }
 
         // POST: expenceMonths/Edit/5
@@ -89,9 +89,9 @@ namespace expenceTracker.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,name,predictedCost,profileId,dateDue")] expenceMonth expenceMonth)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,name,predictedCost,profileId,dateDue")] expectedExpences expectedExpence)
         {
-            if (id != expenceMonth.Id)
+            if (id != expectedExpence.Id)
             {
                 return NotFound();
             }
@@ -100,12 +100,12 @@ namespace expenceTracker.Controllers
             {
                 try
                 {
-                    _context.Update(expenceMonth);
+                    _context.Update(expectedExpence);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!expenceMonthExists(expenceMonth.Id))
+                    if (!expenceMonthExists(expectedExpence.Id))
                     {
                         return NotFound();
                     }
@@ -116,7 +116,7 @@ namespace expenceTracker.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(expenceMonth);
+            return View(expectedExpence);
         }
 
         // GET: expenceMonths/Delete/5
@@ -127,7 +127,7 @@ namespace expenceTracker.Controllers
                 return NotFound();
             }
 
-            var expenceMonth = await _context.expenceMonths
+            var expenceMonth = await _context.expectedExpence
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (expenceMonth == null)
             {
@@ -142,10 +142,10 @@ namespace expenceTracker.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var expenceMonth = await _context.expenceMonths.FindAsync(id);
-            if (expenceMonth != null)
+            var expectedExpence = await _context.expectedExpence.FindAsync(id);
+            if (expectedExpence != null)
             {
-                _context.expenceMonths.Remove(expenceMonth);
+                _context.expectedExpence.Remove(expectedExpence);
             }
 
             await _context.SaveChangesAsync();
@@ -154,7 +154,7 @@ namespace expenceTracker.Controllers
 
         private bool expenceMonthExists(int id)
         {
-            return _context.expenceMonths.Any(e => e.Id == id);
+            return _context.expectedExpence.Any(e => e.Id == id);
         }
 
 

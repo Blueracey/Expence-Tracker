@@ -12,7 +12,7 @@ using expenceTracker.Data;
 namespace expenceTracker.Migrations
 {
     [DbContext(typeof(AppDatabaseContext))]
-    [Migration("20241206012927_init1")]
+    [Migration("20241206063731_init1")]
     partial class init1
     {
         /// <inheritdoc />
@@ -80,7 +80,7 @@ namespace expenceTracker.Migrations
                     b.ToTable("actualExpences");
                 });
 
-            modelBuilder.Entity("expenceTracker.Models.expenceMonth", b =>
+            modelBuilder.Entity("expenceTracker.Models.expectedExpences", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -90,6 +90,9 @@ namespace expenceTracker.Migrations
 
                     b.Property<DateOnly>("dateDue")
                         .HasColumnType("date");
+
+                    b.Property<int>("expenceID")
+                        .HasColumnType("int");
 
                     b.Property<string>("name")
                         .IsRequired()
@@ -105,10 +108,10 @@ namespace expenceTracker.Migrations
 
                     b.HasIndex("userId");
 
-                    b.ToTable("expenceMonths");
+                    b.ToTable("expectedExpence");
                 });
 
-            modelBuilder.Entity("expenceTracker.Models.expenceRecurringAndVariable", b =>
+            modelBuilder.Entity("expenceTracker.Models.monthlyExpence", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -116,15 +119,11 @@ namespace expenceTracker.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("cost")
+                    b.Property<double>("budget")
                         .HasColumnType("float");
 
-                    b.Property<string>("frequency")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateOnly>("date")
+                        .HasColumnType("date");
 
                     b.Property<int>("userId")
                         .HasColumnType("int");
@@ -133,7 +132,7 @@ namespace expenceTracker.Migrations
 
                     b.HasIndex("userId");
 
-                    b.ToTable("expenceRecurringAndVariables");
+                    b.ToTable("monthlyExpence");
                 });
 
             modelBuilder.Entity("expenceTracker.Models.actualExpence", b =>
@@ -147,7 +146,7 @@ namespace expenceTracker.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("expenceTracker.Models.expenceMonth", b =>
+            modelBuilder.Entity("expenceTracker.Models.expectedExpences", b =>
                 {
                     b.HasOne("expenceTracker.Models.User", "User")
                         .WithMany()
@@ -158,7 +157,7 @@ namespace expenceTracker.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("expenceTracker.Models.expenceRecurringAndVariable", b =>
+            modelBuilder.Entity("expenceTracker.Models.monthlyExpence", b =>
                 {
                     b.HasOne("expenceTracker.Models.User", "User")
                         .WithMany()

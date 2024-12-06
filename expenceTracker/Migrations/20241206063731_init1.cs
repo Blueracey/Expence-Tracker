@@ -50,7 +50,7 @@ namespace expenceTracker.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "expenceMonths",
+                name: "expectedExpence",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -58,13 +58,14 @@ namespace expenceTracker.Migrations
                     name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     predictedCost = table.Column<double>(type: "float", nullable: false),
                     userId = table.Column<int>(type: "int", nullable: false),
+                    expenceID = table.Column<int>(type: "int", nullable: false),
                     dateDue = table.Column<DateOnly>(type: "date", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_expenceMonths", x => x.Id);
+                    table.PrimaryKey("PK_expectedExpence", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_expenceMonths_Users_userId",
+                        name: "FK_expectedExpence_Users_userId",
                         column: x => x.userId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -72,21 +73,20 @@ namespace expenceTracker.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "expenceRecurringAndVariables",
+                name: "monthlyExpence",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    cost = table.Column<double>(type: "float", nullable: false),
-                    frequency = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    userId = table.Column<int>(type: "int", nullable: false)
+                    date = table.Column<DateOnly>(type: "date", nullable: false),
+                    userId = table.Column<int>(type: "int", nullable: false),
+                    budget = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_expenceRecurringAndVariables", x => x.Id);
+                    table.PrimaryKey("PK_monthlyExpence", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_expenceRecurringAndVariables_Users_userId",
+                        name: "FK_monthlyExpence_Users_userId",
                         column: x => x.userId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -99,13 +99,13 @@ namespace expenceTracker.Migrations
                 column: "userId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_expenceMonths_userId",
-                table: "expenceMonths",
+                name: "IX_expectedExpence_userId",
+                table: "expectedExpence",
                 column: "userId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_expenceRecurringAndVariables_userId",
-                table: "expenceRecurringAndVariables",
+                name: "IX_monthlyExpence_userId",
+                table: "monthlyExpence",
                 column: "userId");
         }
 
@@ -116,10 +116,10 @@ namespace expenceTracker.Migrations
                 name: "actualExpences");
 
             migrationBuilder.DropTable(
-                name: "expenceMonths");
+                name: "expectedExpence");
 
             migrationBuilder.DropTable(
-                name: "expenceRecurringAndVariables");
+                name: "monthlyExpence");
 
             migrationBuilder.DropTable(
                 name: "Users");

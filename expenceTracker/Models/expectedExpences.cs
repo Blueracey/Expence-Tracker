@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace expenceTracker.Models
 {
-    public class expenceMonth
+    public class expectedExpences
     {
 
         [Key]
@@ -19,6 +19,12 @@ namespace expenceTracker.Models
 
         [ForeignKey("userId")]
         public User User { get; set; }
+
+
+        public int expenceID { get; set; }
+
+        [ForeignKey("expenceId")]
+        expectedExpences expenceMonth { get; set; }
 
         [Required(ErrorMessage = "Date is required")]
         [DataType(DataType.Date)]
