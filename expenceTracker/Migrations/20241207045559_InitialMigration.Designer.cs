@@ -12,8 +12,8 @@ using expenceTracker.Data;
 namespace expenceTracker.Migrations
 {
     [DbContext(typeof(AppDatabaseContext))]
-    [Migration("20241207024553_Initial")]
-    partial class Initial
+    [Migration("20241207045559_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

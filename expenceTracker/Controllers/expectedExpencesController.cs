@@ -53,6 +53,10 @@ namespace expenceTracker.Controllers
                 return NotFound();
             }
 
+            TempData["expenceId"] = expectedExpences.expenceId;
+            TempData["userId"] = expectedExpences.userId;
+            TempData["name"] = expectedExpences.name;
+
             return View(expectedExpences);
         }
 

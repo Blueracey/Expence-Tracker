@@ -43,6 +43,12 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
+
+
+    @* TRYING THIS OUT *@
+    <a asp-controller="actualExpences" asp-action="Create" asp-route-expenceId="@Model?.expenceId" asp-route-userId="@Model?.userId">Create Actual Expence</a>
+
+
     <a asp-controller="expectedExpences" asp-action="Index" asp-route-expenceId="@TempData.Peek("expenceId");" asp-route-userId="@TempData.Peek("userId");">Back</a>
 </div>

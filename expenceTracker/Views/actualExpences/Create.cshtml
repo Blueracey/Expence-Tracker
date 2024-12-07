@@ -1,0 +1,31 @@
+﻿@model expenceTracker.Models.actualExpence
+
+@{
+    ViewData["Title"] = "Create Actual Expense";
+}
+
+<h1>Create Actual Expense</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label for="userId">User ID</label>
+        <input type="text" class="form-control" id="userId" name="userId" value="@ViewBag.userId" readonly />
+    </div>
+    <div class="form-group">
+        <label for="expenceId">Expence ID</label>
+        <input type="text" class="form-control" id="expenceId" name="expenceId" value="@ViewBag.expenceId" readonly />
+    </div>
+    <div class="form-group">
+        <label for="category">Category</label>
+        <input type="text" class="form-control" id="category" name="category" value="@ViewBag.name" readonly/>
+    </div>
+    <div class="form-group">
+        <label for="finalCost">Final Cost</label>
+        <input type="text" class="form-control" id="finalCost" name="finalCost" />
+    </div>
+    <div class="form-group">
+        <label for="datePayed">Date Paid</label>
+        <input type="date" class="form-control" id="datePayed" name="datePayed" />
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
