@@ -1,10 +1,13 @@
 ﻿using expenceTracker.Data;
 using expenceTracker.Models;
 using expenceTracker.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 //https://localhost:7267/account/Register
 namespace expenceTracker.Controllers
@@ -56,26 +59,30 @@ namespace expenceTracker.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(UserLoginDTO dto)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(u => u.Name == dto.Name);
-
-            if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password,user.Password)) 
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.Email == dto.Email);
+            if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
                 return Unauthorized("Invalid Credentials");
 
-            var token = _tokenService.GenerateToken(user.Name);
-
-
-            Response.Cookies.Append("AuthToken", token, new CookieOptions
+            var claims = new[]
             {
-                HttpOnly = true,
-                Secure = true,
-                SameSite = SameSiteMode.Strict,
-                Expires = DateTime.UtcNow.AddMinutes(30) //expires in 30 minutes
-            });
+        new Claim(ClaimTypes.Email, user.Email)
+    };
 
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var principal = new ClaimsPrincipal(identity);
 
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                principal,
+                new AuthenticationProperties
+                {
+                    IsPersistent = false,
+                    ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30)
+                });
 
             return RedirectToAction("Index", "monthlyExpences");
         }
+
 
 
 

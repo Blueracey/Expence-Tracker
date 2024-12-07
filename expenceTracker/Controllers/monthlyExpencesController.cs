@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using expenceTracker.Data;
 using expenceTracker.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace expenceTracker.Controllers
 {
+    [Authorize]
     public class monthlyExpencesController : Controller
     {
         private readonly AppDatabaseContext _context;
