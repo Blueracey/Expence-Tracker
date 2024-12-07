@@ -6,7 +6,7 @@
 
 <h1>Edit</h1>
 
-<h4>monthlyExpence</h4>
+<h4>Expense Month</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,17 +14,13 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="date" class="control-label"></label>
-                <input asp-for="date" class="form-control" />
+                <label asp-for="date" class="control-label">Date</label>
+                <input type="month" asp-for="date" class="form-control" />
                 <span asp-validation-for="date" class="text-danger"></span>
             </div>
 
-
-                <input type="hidden" asp-for="userId" class="form-control" />
-                <span asp-validation-for="userId" class="text-danger"></span>
-
             <div class="form-group">
-                <label asp-for="budget" class="control-label"></label>
+                <label asp-for="budget" class="control-label">Budget</label>
                 <input asp-for="budget" class="form-control" />
                 <span asp-validation-for="budget" class="text-danger"></span>
             </div>

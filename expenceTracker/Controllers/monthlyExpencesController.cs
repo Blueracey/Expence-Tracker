@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using expenceTracker.Data;
 using expenceTracker.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace expenceTracker.Controllers
 {
@@ -56,8 +57,16 @@ namespace expenceTracker.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("date,userId,budget")] monthlyExpence monthlyExpence)
+        public async Task<IActionResult> Create([Bind("date,budget")] monthlyExpence monthlyExpence)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null)
+            {
+                return Unauthorized("User is not authenticated.");
+            }
+
+            monthlyExpence.userId = int.Parse(userId);
+
             System.Diagnostics.Debug.WriteLine(ModelState.IsValid);
             if (ModelState.IsValid)
             {

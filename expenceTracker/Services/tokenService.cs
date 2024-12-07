@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using expenceTracker.Models;
 
 namespace expenceTracker.Services
 {
@@ -16,7 +17,7 @@ namespace expenceTracker.Services
         }
 
 
-        public string GenerateToken(string username)
+        public string GenerateToken(string email, string userId)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
 
@@ -27,7 +28,8 @@ namespace expenceTracker.Services
 
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, username)
+                    new Claim(ClaimTypes.Email, email),
+                    new Claim(ClaimTypes.NameIdentifier, userId)
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(30), //token will expire in half an hour 
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
