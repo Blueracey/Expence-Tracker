@@ -1,16 +1,16 @@
-﻿@model expenceTracker.Models.expenceMonth
+﻿@model expenceTracker.Models.expectedExpences
 
 @{
     ViewData["Title"] = "Create";
-    //https://localhost:7267/expenceMonths
 }
 
-<h1 class="text-center">Create</h1>
+<h1>Create</h1>
 
-<h4 class="text-center">Predicted Monthly Expense</h4>
+<h4>expectedExpences</h4>
 <hr />
-<div class="d-flex justify-content-center align-items-center" style="min-height: auto;">
-    <div class="card-body" style="max-width: 700px; width: 100%;">
+<div class="row">
+    <div class="col-md-4">
+
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -20,25 +20,31 @@
             </div>
             <div class="form-group">
                 <label asp-for="predictedCost" class="control-label"></label>
-                <input asp-for="predictedCost" class="form-control" />
+                <input asp-for="predictedCost" class="form-control"  />
                 <span asp-validation-for="predictedCost" class="text-danger"></span>
             </div>
 
-            <input asp-for="userId" class="form-control" type="hidden" value="1" />
+                <input type="hidden" asp-for="userId" class="form-control" value="@ViewBag.userId"/>
+                <span asp-validation-for="userId" class="text-danger"></span>
+  
+                <label asp-for="expenceId" class="control-label"></label>
+                <input type="hidden" asp-for="expenceId" class="form-control" value ="@ViewBag.expenceId"/>
+                <span asp-validation-for="expenceId" class="text-danger"></span>
 
             <div class="form-group">
                 <label asp-for="dateDue" class="control-label"></label>
                 <input asp-for="dateDue" class="form-control" />
                 <span asp-validation-for="dateDue" class="text-danger"></span>
             </div>
-            <div class="form-group text-center">
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
-        <div class="text-center mt-3">
-            <a asp-action="Index">Back to List</a>
-        </div>
     </div>
+</div>
+
+<div>
+    <a asp-controller="expectedExpences" asp-action="Index" asp-route-expenceId="@TempData.Peek("expenceId");" asp-route-userId="@TempData.Peek("userId");">Back</a>
 </div>
 
 @section Scripts {

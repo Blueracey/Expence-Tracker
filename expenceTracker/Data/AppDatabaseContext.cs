@@ -9,9 +9,10 @@ namespace expenceTracker.Data
 
         public DbSet<actualExpence> actualExpences { get; set; }
 
-        public DbSet<expenceMonth> expenceMonths { get; set; }
+        public DbSet<expectedExpences> expectedExpence { get; set; } 
 
-        public DbSet<expenceRecurringAndVariable>expenceRecurringAndVariables { get; set; }
+
+        public DbSet<monthlyExpence> monthlyExpence { get; set; }
 
         public DbSet<User> Users    { get; set; }
 
