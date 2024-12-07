@@ -74,7 +74,7 @@ namespace expenceTracker.Controllers
 
 
 
-            return RedirectToAction("Index", "expenceMonths");
+            return RedirectToAction("Index", "monthlyExpences");
         }
 
 

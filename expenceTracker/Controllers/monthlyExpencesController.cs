@@ -54,8 +54,9 @@ namespace expenceTracker.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,date,userId,budget")] monthlyExpence monthlyExpence)
+        public async Task<IActionResult> Create([Bind("date,userId,budget")] monthlyExpence monthlyExpence)
         {
+            System.Diagnostics.Debug.WriteLine(ModelState.IsValid);
             if (ModelState.IsValid)
             {
                 _context.Add(monthlyExpence);

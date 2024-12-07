@@ -1,42 +1,31 @@
 ﻿@model expenceTracker.Models.monthlyExpence
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create New Expense";
 }
 
-<h1>Create</h1>
+<h1>Create New Expense</h1>
 
-<h4>monthlyExpence</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="date" class="control-label"></label>
-                <input asp-for="date" class="form-control" />
-                <span asp-validation-for="date" class="text-danger"></span>
-            </div>
-
-                <label asp-for="userId" class="control-label"></label> 
-                <input type="hidden" asp-for="userId" class="form-control value="1" /> @*when token works replace value with it*@
-
-            <div class="form-group">
-                <label asp-for="budget" class="control-label"></label>
-                <input asp-for="budget" class="form-control" />
-                <span asp-validation-for="budget" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="date" class="control-label"></label>
+        <input asp-for="date" class="form-control" />
+        <span asp-validation-for="date" class="text-danger"></span>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="form-group">
+        <label asp-for="budget" class="control-label"></label>
+        <input asp-for="budget" class="form-control" />
+        <span asp-validation-for="budget" class="text-danger"></span>
+    </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+
+
+        <input type="hidden " asp-for="userId" class="form-control" value="1" />
+
+
+
+    <button type="submit" class="btn btn-primary">Create</button>
+</form> 
+
+<a href="@Url.Action("Index", "monthlyExpences")">Back to list</a>

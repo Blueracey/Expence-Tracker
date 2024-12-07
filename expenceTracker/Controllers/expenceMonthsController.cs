@@ -23,9 +23,15 @@ namespace expenceTracker.Controllers
         }
 
         // GET: expenceMonths
-        public async Task<IActionResult> Index()
+        [HttpGet("Index/{expenceId}/{userId}")]
+        public async Task<IActionResult> Index(int expenceId, int userId)
         {
-            return View(await _context.expectedExpence.ToListAsync());
+            ViewBag.expenceId = expenceId;
+            ViewBag.userId = userId; 
+            var filtered = await _context.expectedExpence
+            .Where(e => e.expenceId == expenceId && e.userId == userId)  // Filtering based on Category
+            .ToListAsync();
+            return View(filtered);
         }
 
         // GET: expenceMonths/Details/5
@@ -47,9 +53,12 @@ namespace expenceTracker.Controllers
         }
 
         // GET: expenceMonths/Create
+        [HttpGet("ResolveExpence/{expenceId}/{userId}")]
         public IActionResult Create()
         {
-            System.Diagnostics.Debug.WriteLine("create");
+
+            
+
 
             return View();
         }
@@ -64,16 +73,15 @@ namespace expenceTracker.Controllers
 
 
             
-            System.Diagnostics.Debug.WriteLine("__________");
+
             System.Diagnostics.Debug.WriteLine(ModelState.IsValid);
-            System.Diagnostics.Debug.WriteLine("__________");
 
             if (ModelState.IsValid)
             {
                 System.Diagnostics.Debug.WriteLine("Model is correct");
                 _context.Add(expectedExpence);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "monthlyExpences");
             }
             return View(expectedExpence);
         }

@@ -26,7 +26,7 @@ namespace expenceTracker.Models
         public int expenceId { get; set; }
 
         [ForeignKey("expenceId")]
-        expectedExpences expenceMonth { get; set; }
+        monthlyExpence monthlyExpence { get; set; }
 
         [Required(ErrorMessage = "Date is required")]
         [DataType(DataType.Date)]
