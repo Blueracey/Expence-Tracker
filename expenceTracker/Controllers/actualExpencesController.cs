@@ -22,6 +22,16 @@ namespace expenceTracker.Controllers
             _context = context;
         }
 
+        // converts the parameters to tempdata so that the index searches for the correct expencer/user id combo 
+        [HttpGet("actualExpence/Redirect/{expenceId}/{userId}")]
+        public IActionResult Redirect(int expenceId, int userId)
+        {
+            TempData["expenceId"] = expenceId;
+            TempData["userId"] = userId;
+
+            return RedirectToAction(nameof(Index));
+        }
+
         // GET: actualExpences
         public async Task<IActionResult> Index()
         {
