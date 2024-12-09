@@ -46,7 +46,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="actualExpences" asp-action="Index" asp-route-expenceId="@TempData.Peek("expenceId")" asp-route-userId="@TempData.Peek("userId")">Back</a>
 </div>
 
 @section Scripts {

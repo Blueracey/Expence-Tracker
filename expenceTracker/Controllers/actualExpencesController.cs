@@ -35,9 +35,11 @@ namespace expenceTracker.Controllers
         // GET: actualExpences
         public async Task<IActionResult> Index()
         {
-            var expenceId = Convert.ToInt32(TempData["expenceId"]);
-            var userId = Convert.ToInt32(TempData["userId"]);
-            var filtered = await _context.actualExpences
+            var expenceId = Convert.ToInt32(TempData.Peek("expenceId"));
+            var userId = Convert.ToInt32(TempData.Peek("userId"));
+            TempData.Keep("userId");
+            TempData.Keep("expenceId");
+;            var filtered = await _context.actualExpences
             .Where(e => e.expenceId == expenceId && e.userId == userId)  // Filtering based on Category
             .ToListAsync();
             return View(filtered);
@@ -48,6 +50,8 @@ namespace expenceTracker.Controllers
         // GET: actualExpences/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            TempData.Keep("userId");
+            TempData.Keep("expenceId");
             if (id == null)
             {
                 return NotFound();
@@ -97,6 +101,8 @@ namespace expenceTracker.Controllers
         // GET: actualExpences/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            TempData.Keep("userId");
+            TempData.Keep("expenceId");
             if (id == null)
             {
                 return NotFound();
@@ -117,6 +123,8 @@ namespace expenceTracker.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,finalCost,userId,expenceId,category,datePayed")] actualExpence actualExpence)
         {
+            TempData.Keep("userId");
+            TempData.Keep("expenceId");
             if (id != actualExpence.Id)
             {
                 return NotFound();
@@ -148,6 +156,8 @@ namespace expenceTracker.Controllers
         // GET: actualExpences/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            TempData.Keep("userId");
+            TempData.Keep("expenceId");
             if (id == null)
             {
                 return NotFound();
@@ -168,6 +178,8 @@ namespace expenceTracker.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            TempData.Keep("userId");
+            TempData.Keep("expenceId");
             var actualExpence = await _context.actualExpences.FindAsync(id);
             if (actualExpence != null)
             {
