@@ -84,10 +84,12 @@ namespace expenceTracker.Controllers
             return RedirectToAction("Index", "monthlyExpences");
         }
 
-
-
-
-
-
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "account");
+        }
     }
 }

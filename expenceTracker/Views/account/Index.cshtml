@@ -11,14 +11,25 @@
 <hr />
 <div class="d-flex justify-content-center align-items-center" style="min-height: auto;">
     <div class="card-body" style="max-width: 700px; width: 100%;">
-       
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="account" asp-action="Register">Register</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="account" asp-action="Login">Login</a>
-        </li>
-        
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <ul>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="account" asp-action="Register">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="account" asp-action="Login">Login</a>
+                </li>
+            </ul>
+        } else {
+            <ul>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="monthlyExpence" asp-action="Index">
+                        Continue to Expense Months
+                    </a>
+                </li>
+            </ul>
+        }
 
         <div class="text-center mt-3">
         </div>
