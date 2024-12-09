@@ -1,4 +1,7 @@
-﻿using System;
+﻿
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,7 +25,14 @@ namespace expenceTracker.Controllers
         // GET: actualExpences
         public async Task<IActionResult> Index()
         {
-            return View(await _context.actualExpences.ToListAsync());
+            var expenceId = Convert.ToInt32(TempData["expenceId"]);
+            var userId = Convert.ToInt32(TempData["userId"]);
+            var filtered = await _context.actualExpences
+            .Where(e => e.expenceId == expenceId && e.userId == userId)  // Filtering based on Category
+            .ToListAsync();
+            return View(filtered);
+
+
         }
 
         // GET: actualExpences/Details/5
@@ -44,27 +54,27 @@ namespace expenceTracker.Controllers
         }
 
         // GET: actualExpences/Create
-        public IActionResult Create()
+        [HttpGet("actualExpence/{expenceId}/{userId}/{category}")]
+        public IActionResult Create(int expenceId,int userId, string category)
         {
-            
-            var expenceId = TempData["expenceId"];
-            var userId = TempData["userId"];
-            var name = TempData["name"];
-
-            ViewBag.expenceId = expenceId;
-            ViewBag.userId = userId;
-            ViewBag.name = name;
-
+            System.Diagnostics.Debug.WriteLine("View");
+            TempData["expenceId"] = expenceId;
+            TempData["userId"] = userId;
+            TempData["category"] = category;
             return View();
         }
 
         // POST: actualExpences/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost("actualExpence/{expenceId}/{userId}/{category}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,finalCost,userId,expenceId,category,datePayed")] actualExpence actualExpence)
         {
+            TempData.Keep("expenceId");
+            TempData.Keep("userId");
+
+            System.Diagnostics.Debug.WriteLine("running");
             if (ModelState.IsValid)
             {
                 _context.Add(actualExpence);

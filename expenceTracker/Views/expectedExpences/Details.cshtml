@@ -22,18 +22,7 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.predictedCost)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.userId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.userId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.expenceId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.expenceId)
-        </dd>
+
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.dateDue)
         </dt>
@@ -47,7 +36,7 @@
 
 
     @* TRYING THIS OUT *@
-    <a asp-controller="actualExpences" asp-action="Create" asp-route-expenceId="@Model?.expenceId" asp-route-userId="@Model?.userId">Create Actual Expence</a>
+    <a asp-controller="actualExpences" asp-action="Create" asp-route-expenceId="@Model?.expenceId" asp-route-userId="@Model?.userId" asp-route-category="@Model?.name">Create Actual Expence</a>
 
 
     <a asp-controller="expectedExpences" asp-action="Index" asp-route-expenceId="@TempData.Peek("expenceId");" asp-route-userId="@TempData.Peek("userId");">Back</a>
