@@ -36,7 +36,8 @@
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
-                    <a asp-controller="expectedExpences" asp-action="Index" asp-route-expenceId="@item.Id" asp-route-userId="@item.userId">Expences</a>
+                <a asp-controller="expectedExpences" asp-action="Index" asp-route-expenceId="@item.Id" asp-route-userId="@item.userId">Predictions</a> |
+                <a asp-controller="actualExpences" asp-action="Redirect" asp-route-expenceId="@item.Id" asp-route-userId="@item.userId">Final Expences</a>
             </td>
         </tr>
 }
