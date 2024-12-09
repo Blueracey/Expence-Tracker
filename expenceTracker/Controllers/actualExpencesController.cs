@@ -44,12 +44,13 @@ namespace expenceTracker.Controllers
         }
 
         // GET: actualExpences/Create
-        public IActionResult Create()
+        [HttpGet("actualExpence/Create/{expenceId}/{userId}/{name}")]
+        public IActionResult Create(int expenceId, int userId, string name)
         {
-            
-            var expenceId = TempData["expenceId"];
-            var userId = TempData["userId"];
-            var name = TempData["name"];
+            System.Diagnostics.Debug.WriteLine("called");
+            TempData["expenceId"] = expenceId;
+            TempData["userId"] = userId;
+            TempData["name"] = name;
 
             ViewBag.expenceId = expenceId;
             ViewBag.userId = userId;
@@ -65,13 +66,14 @@ namespace expenceTracker.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,finalCost,userId,expenceId,category,datePayed")] actualExpence actualExpence)
         {
+            System.Diagnostics.Debug.WriteLine("called");
             if (ModelState.IsValid)
             {
                 _context.Add(actualExpence);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(actualExpence);
+            return Ok("error");
         }
 
         // GET: actualExpences/Edit/5

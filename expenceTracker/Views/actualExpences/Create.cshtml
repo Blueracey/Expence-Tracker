@@ -6,26 +6,26 @@
 
 <h1>Create Actual Expense</h1>
 
-<form method="post">
+<form asp-controller="actualExpences" asp-action="Create" method="post">
     <div class="form-group">
-        <label for="userId">User ID</label>
-        <input type="text" class="form-control" id="userId" name="userId" value="@ViewBag.userId" readonly />
+        <label asp-for="userId">User ID</label>
+        <input asp-for="userId" type="text" class="form-control" id="userId" name="userId" value="@ViewBag.userId" readonly />
     </div>
     <div class="form-group">
-        <label for="expenceId">Expence ID</label>
-        <input type="text" class="form-control" id="expenceId" name="expenceId" value="@ViewBag.expenceId" readonly />
+        <label asp-for="expenceId">Expence ID</label>
+        <input asp-for="expenceId" type="text" class="form-control" id="expenceId" name="expenceId" value="@ViewBag.expenceId" readonly />
     </div>
     <div class="form-group">
-        <label for="category">Category</label>
-        <input type="text" class="form-control" id="category" name="category" value="@ViewBag.name" readonly/>
+        <label asp-for="category">Category</label>
+        <input asp-for="category" type="text" class="form-control" id="category" name="category" value="@ViewBag.name" readonly />
     </div>
     <div class="form-group">
-        <label for="finalCost">Final Cost</label>
-        <input type="text" class="form-control" id="finalCost" name="finalCost" />
+        <label asp-for="finalCost">Final Cost</label>
+        <input asp-for="finalCost" type="text" class="form-control" id="finalCost" name="finalCost" />
     </div>
     <div class="form-group">
-        <label for="datePayed">Date Paid</label>
-        <input type="date" class="form-control" id="datePayed" name="datePayed" />
+        <label asp-for="datePayed">Date Paid</label>
+        <input asp-for="datePayed" type="date" class="form-control" id="datePayed" name="datePayed" />
     </div>
     <button type="submit" class="btn btn-primary">Save</button>
 </form>
