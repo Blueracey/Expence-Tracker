@@ -27,7 +27,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.SlidingExpiration = true;
     });
 
-
+builder.Services.AddControllers(options =>
+    options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
 
 builder.Services.AddSingleton(new tokenService("07cbc59d859b81dab168abb802cf4dde44d5f62caae6a7d1497c58b1fc78b8a79a21d238adf2ccc5d871d37ffb9cf11ccb33eb09b4c1092c0115f7c1054b565c770510a0f0da9ad40b6cec900a07775b5118b8a4b8ade3d4bb0d03e5f48678aa"));
 var app = builder.Build();

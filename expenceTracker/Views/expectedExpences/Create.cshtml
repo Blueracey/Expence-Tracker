@@ -6,7 +6,7 @@
 
 <h1>Create</h1>
 
-<h4>expectedExpences</h4>
+<h4>Expected Expences</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,28 +14,38 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="name" class="control-label"></label>
-                <input asp-for="name" class="form-control" />
+                <label asp-for="name" class="control-label">Name</label>
+                <input asp-for="name" class="form-control" required />
                 <span asp-validation-for="name" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="predictedCost" class="control-label"></label>
-                <input asp-for="predictedCost" class="form-control"  />
+                <label for="type" class="control-label">Type</label>
+                <select asp-for="type" class="form-control" required>
+                    <option value="" selected disabled>Select Expense Type</option>
+                    <option value="Variable">Variable</option>
+                    <option value="Recurring">Recurring</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="frequencyType" style="display: none;">
+                <label for="frequency" class="control-label">Frequency</label>
+                <select asp-for="frequency" class="form-control" required>
+                    <option value="" selected disabled>Select Frequency</option>
+                    <option value="Weekly">Weekly</option>
+                    <option value="Biweekly">Biweekly</option>
+                    <option value="Monthly">Monthly</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="predictedCost" class="control-label">Predicted Cost</label>
+                <input asp-for="predictedCost" type="number" class="form-control" required />
                 <span asp-validation-for="predictedCost" class="text-danger"></span>
             </div>
+            <input type="hidden" asp-for="userId" value="@ViewBag.userId" />
+            <input type="hidden" asp-for="expenceId" value="@ViewBag.expenceId" />
 
-                <input type="hidden" asp-for="userId" class="form-control" value="@ViewBag.userId"/>
-                <span asp-validation-for="userId" class="text-danger"></span>
-  
-                <label asp-for="expenceId" class="control-label"></label>
-                <input type="hidden" asp-for="expenceId" class="form-control" value ="@ViewBag.expenceId"/>
-                <span asp-validation-for="expenceId" class="text-danger"></span>
-
-            <div class="form-group">
-                <label asp-for="dateDue" class="control-label"></label>
-                <input asp-for="dateDue" class="form-control" />
-                <span asp-validation-for="dateDue" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -44,9 +54,22 @@
 </div>
 
 <div>
-    <a asp-controller="expectedExpences" asp-action="Index" asp-route-expenceId="@TempData.Peek("expenceId")" asp-route-userId="@TempData.Peek("userId")">Back</a>
+    <a asp-controller="expectedExpences" asp-action="Index" asp-route-expenceId="@ViewBag.expenceId" asp-route-userId="@ViewBag.userId">Back</a>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        document.getElementById("type").addEventListener("change", function () {
+            var freqValue = this.value;
+            var frequencyTypes = document.getElementById("frequencyType");
+
+            if (freqValue === "Recurring") {
+                frequencyTypes.style.display = "block";
+            } else {
+                frequencyTypes.style.display = "none";
+            }
+        });
+    </script>
 }
