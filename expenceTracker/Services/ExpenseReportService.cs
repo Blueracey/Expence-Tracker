@@ -104,7 +104,7 @@ namespace expenceTracker.Services
 
                             foreach (var payment in actualExpenses)
                             {
-                                column.Item().Text($" > {payment.category}: ${payment.finalCost:0.00}");
+                                column.Item().Text($" > {payment.category}: ${payment.finalCost:0.00} : {payment.datePayed:MMMM dd yyyy}");
                             }
                         });
                     });
