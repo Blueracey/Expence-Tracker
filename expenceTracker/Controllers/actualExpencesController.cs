@@ -125,6 +125,7 @@ namespace expenceTracker.Controllers
         {
             TempData.Keep("userId");
             TempData.Keep("expenceId");
+            TempData.Keep("category");
             if (id != actualExpence.Id)
             {
                 return NotFound();
@@ -193,6 +194,26 @@ namespace expenceTracker.Controllers
         private bool actualExpenceExists(int id)
         {
             return _context.actualExpences.Any(e => e.Id == id);
+        }
+
+        // GET: actualExpences/Sum
+        [HttpGet("actualExpence/sum")]
+        public async Task<IActionResult> GetTotalActualExpenses(int expenceId)
+        {
+            string userIdString = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            if (userIdString == null)
+            {
+                return Unauthorized();
+            }
+
+            int.TryParse(userIdString, out int userId);
+
+            var sum = await _context.actualExpences
+                .Where(e => e.expenceId == expenceId && e.userId == userId)
+                .SumAsync(e => e.finalCost);
+
+            return Ok(new { TotalActualExpenses = sum });
         }
     }
 }

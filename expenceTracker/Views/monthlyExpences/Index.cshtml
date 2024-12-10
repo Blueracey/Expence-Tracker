@@ -19,6 +19,9 @@
             <th>
                 Budget
             </th>
+
+            <th>Total Expected Expense</th>
+            <th>Total Actual Spendings</th>
             <th></th>
         </tr>
     </thead>
@@ -30,16 +33,62 @@
             </td>
 
             <td>
-                @Html.DisplayFor(modelItem => item.budget)
+                $@Html.DisplayFor(modelItem => item.budget)
+            </td>
+            <td>
+                <span id="expectedExpense-@item.Id">Loading...</span>
+            </td>
+            <td>
+                <span id="actualExpense-@item.Id">Loading...</span>
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
-                <a asp-controller="expectedExpences" asp-action="Index" asp-route-expenceId="@item.Id">Predictions</a> |
-                <a asp-controller="actualExpences" asp-action="Redirect" asp-route-expenceId="@item.Id">Final Expences</a>
+                <a asp-controller="expectedExpences" asp-action="Index" asp-route-expenceId="@item.Id" asp-route-date="@item.date">Predictions</a> |
+                <a asp-controller="actualExpences" asp-action="Index" asp-route-expenceId="@item.Id">Final Expences</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const expenseIds = @Html.Raw(Json.Serialize(Model.Select(m => m.Id)));
+
+        expenseIds.forEach(expenseId => {
+            fetch(`/expectedExpence/sum?expenceId=${expenseId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const totalElement = document.getElementById(`expectedExpense-${expenseId}`);
+                    if (data && data.totalExpectedExpenses !== undefined) {
+                        totalElement.innerText = `$${data.totalExpectedExpenses.toFixed(2)}`;
+                    } else {
+                        totalElement.innerText = "N/A";
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching total expected expense:", error);
+                    const totalElement = document.getElementById(`expectedExpense-${expenseId}`);
+                    totalElement.innerText = "Error";
+                });
+
+            fetch(`/actualExpence/sum?expenceId=${expenseId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const actualElement = document.getElementById(`actualExpense-${expenseId}`);
+                    if (data && data.totalActualExpenses !== undefined) {
+                        actualElement.innerText = `$${data.totalActualExpenses.toFixed(2)}`;
+                    } else {
+                        actualElement.innerText = "N/A";
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching total actual expense:", error);
+                    const actualElement = document.getElementById(`actualExpense-${expenseId}`);
+                    actualElement.innerText = "Error";
+                });
+        });
+    });
+</script>

@@ -10,6 +10,7 @@ using expenceTracker.Models;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Controller;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 namespace expenceTracker.Controllers
 {
@@ -29,8 +30,10 @@ namespace expenceTracker.Controllers
 
         // GET: expectedExpences
         [HttpGet("expectedExpence/{expenceId}")]
-        public async Task<IActionResult> Index(int expenceId)
+        public async Task<IActionResult> Index(int expenceId, DateOnly date)
         {
+            ViewData["date"] = date;
+
             string userIdString = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
 
             if (userIdString == null)
@@ -100,6 +103,7 @@ namespace expenceTracker.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("name, predictedCost, type, frequency, userId, expenceId")] expectedExpences expectedExpences)
         {
+            //for fetching logged user data and setting it to the data to be inserted
             string userIdString = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
             int.TryParse(userIdString, out int userId);
 
@@ -113,6 +117,7 @@ namespace expenceTracker.Controllers
             expectedExpences.User = user;
             expectedExpences.userId = userId;
 
+            //fetching monthly expense data to be set to the data to be inserted
             var monthlyExpence = await _context.monthlyExpence.FindAsync(expectedExpences.expenceId);
             if (monthlyExpence == null)
             {
@@ -121,27 +126,25 @@ namespace expenceTracker.Controllers
             }
             expectedExpences.monthlyExpence = monthlyExpence;
 
+            //calculation of the predicted expense based on the frequency received 
             if (expectedExpences.frequency != null && expectedExpences.predictedCost != 0)
             {
                 double calculatedCost = expectedExpences.predictedCost;
 
-                // Perform the calculation based on the frequency
                 switch (expectedExpences.frequency)
                 {
                     case "Weekly":
-                        calculatedCost *= 4; // Multiply by 4 for weekly cost
+                        calculatedCost *= 4;
                         break;
                     case "Biweekly":
-                        calculatedCost *= 2; // Multiply by 2 for biweekly cost
+                        calculatedCost *= 2;
                         break;
-                    case "Monthly":
-                        // No change for monthly as it's the base cost
+                    case "Monthly" or "--":
                         break;
                     default:
                         break;
                 }
 
-                // Set the calculated cost
                 expectedExpences.predictedCost = calculatedCost;
             }
             else
@@ -149,6 +152,15 @@ namespace expenceTracker.Controllers
                 ModelState.AddModelError("predictedCost", "Predicted cost and frequency must be provided.");
             }
 
+            //Looks if an expected expense with a similar name exists
+            var existingName = await _context.expectedExpence.FirstOrDefaultAsync(e => e.name == expectedExpences.name);
+            if (existingName != null)
+            {
+                ModelState.AddModelError("name", "Expected Expense with same name already exists.");
+            }
+
+
+            //
             if (ModelState.IsValid)
             {
                 _context.Add(expectedExpences);
@@ -190,7 +202,7 @@ namespace expenceTracker.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,name,predictedCost,userId,expenceId,dateDue")] expectedExpences expectedExpences)
+        public async Task<IActionResult> Edit(int id, [Bind("Id, name, predictedCost, type, frequency ,userId, expenceId")] expectedExpences expectedExpences)
         {
             TempData.Keep("expenceId");
             TempData.Keep("userId");
@@ -198,6 +210,31 @@ namespace expenceTracker.Controllers
             if (id != expectedExpences.Id)
             {
                 return NotFound();
+            }
+
+            if (expectedExpences.frequency != null && expectedExpences.predictedCost != 0)
+            {
+                double calculatedCost = expectedExpences.predictedCost;
+
+                switch (expectedExpences.frequency)
+                {
+                    case "Weekly":
+                        calculatedCost *= 4;
+                        break;
+                    case "Biweekly":
+                        calculatedCost *= 2;
+                        break;
+                    case "Monthly":
+                        break;
+                    default:
+                        break;
+                }
+
+                expectedExpences.predictedCost = calculatedCost;
+            }
+            else
+            {
+                ModelState.AddModelError("predictedCost", "Predicted cost and frequency must be provided.");
             }
 
             if (ModelState.IsValid)
@@ -218,7 +255,7 @@ namespace expenceTracker.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", new { expenceId = expectedExpences.expenceId });
             }
             return View(expectedExpences);
         }
@@ -260,7 +297,7 @@ namespace expenceTracker.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", new { expenceId = expectedExpences.expenceId });
         }
 
         private bool expectedExpencesExists(int id)
@@ -269,6 +306,26 @@ namespace expenceTracker.Controllers
             TempData.Keep("userId");
 
             return _context.expectedExpence.Any(e => e.Id == id);
+        }
+
+        // GET: expectedExpences/Sum
+        [HttpGet("expectedExpence/sum")]
+        public async Task<IActionResult> GetTotalExpectedExpenses(int expenceId)
+        {
+            string userIdString = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            if (userIdString == null)
+            {
+                return Unauthorized();
+            }
+
+            int.TryParse(userIdString, out int userId);
+
+            var sum = await _context.expectedExpence
+                .Where(e => e.expenceId == expenceId && e.userId == userId)
+                .SumAsync(e => e.predictedCost);
+
+            return Ok(new { TotalExpectedExpenses =  sum });
         }
     }
 }

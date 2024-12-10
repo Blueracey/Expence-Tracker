@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Actual</h1>
+<h1>Actual Expenses</h1>
 
 <p>
     <a asp-controller="monthlyExpences" asp-action="Index">Back</a>
@@ -13,19 +13,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.finalCost)
+                Amount
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.userId)
+                Category
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.expenceId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.category)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.datePayed)
+                Payment Date
             </th>
             <th></th>
         </tr>
@@ -34,13 +28,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.finalCost)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.userId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.expenceId)
+                $@Html.DisplayFor(modelItem => item.finalCost)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.category)
@@ -49,7 +37,7 @@
                 @Html.DisplayFor(modelItem => item.datePayed)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Edit" asp-route-id="@item.Id" asp-route-category="@item.category">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>

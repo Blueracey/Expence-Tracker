@@ -11,15 +11,27 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.name)
+            Name
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.name)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.predictedCost)
+        <dt class="col-sm-2">
+            Type
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.type)
+        </dd>
+        <dt class="col-sm-2">
+            Frequency
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.frequency)
+        </dd>
+        <dt class="col-sm-2">
+           Predicted Cost
+        </dt>
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.predictedCost)
         </dd>
     </dl>
