@@ -35,12 +35,23 @@ namespace expenceTracker.Controllers
         }
 
         // GET: actualExpences
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int expenceId)
         {
-            var expenceId = Convert.ToInt32(TempData.Peek("expenceId"));
-            var userId = Convert.ToInt32(TempData.Peek("userId"));
             TempData.Keep("userId");
             TempData.Keep("expenceId");
+
+            string userIdString = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            if (userIdString == null)
+            {
+                return Unauthorized();
+            }
+
+            if (!int.TryParse(userIdString, out int userId))
+            {
+                return BadRequest("Invalid user ID");
+            }
+
 ;            var filtered = await _context.actualExpences
             .Where(e => e.expenceId == expenceId && e.userId == userId)  // Filtering based on Category
             .ToListAsync();
@@ -95,7 +106,7 @@ namespace expenceTracker.Controllers
             {
                 _context.Add(actualExpence);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", new { expenceId = actualExpence.expenceId });
             }
             return View(actualExpence);
         }
@@ -151,7 +162,7 @@ namespace expenceTracker.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", new { expenceId = actualExpence.expenceId });
             }
             return View(actualExpence);
         }
@@ -190,7 +201,7 @@ namespace expenceTracker.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", new { expenceId = actualExpence.expenceId });
         }
 
         private bool actualExpenceExists(int id)

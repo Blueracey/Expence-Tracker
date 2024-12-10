@@ -204,9 +204,6 @@ namespace expenceTracker.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id, name, predictedCost, type, frequency ,userId, expenceId")] expectedExpences expectedExpences)
         {
-            TempData.Keep("expenceId");
-            TempData.Keep("userId");
-
             if (id != expectedExpences.Id)
             {
                 return NotFound();
