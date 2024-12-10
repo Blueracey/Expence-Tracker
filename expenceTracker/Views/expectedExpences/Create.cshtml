@@ -62,7 +62,12 @@
     <script>
         document.getElementById("type").addEventListener("change", function () {
             var freqValue = this.value;
+            var selectedFrequency = document.getElementById("frequency");
             var frequencyTypes = document.getElementById("frequencyType");
+
+            if (freqValue === "Variable") {
+                selectedFrequency.value = "--";
+            }
 
             if (freqValue === "Recurring") {
                 frequencyTypes.style.display = "block";

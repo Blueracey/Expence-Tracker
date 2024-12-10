@@ -9,6 +9,7 @@ using expenceTracker.Data;
 using expenceTracker.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using expenceTracker.Services;
 
 namespace expenceTracker.Controllers
 {
@@ -17,9 +18,13 @@ namespace expenceTracker.Controllers
     {
         private readonly AppDatabaseContext _context;
 
-        public monthlyExpencesController(AppDatabaseContext context)
+        private readonly ExpenseReportService _expenseReportService;
+        private readonly ILogger<expectedExpencesController> _logger;
+        public monthlyExpencesController(AppDatabaseContext context, ExpenseReportService expenseReportService, ILogger<expectedExpencesController> logger)
         {
             _context = context;
+            _expenseReportService = expenseReportService;
+            _logger = logger;
         }
 
         // GET: monthlyExpences
@@ -164,6 +169,23 @@ namespace expenceTracker.Controllers
         private bool monthlyExpenceExists(int id)
         {
             return _context.monthlyExpence.Any(e => e.Id == id);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DownloadExpenseMonthReport(int id)
+        {
+            _logger.LogInformation($"Received id: {id}");
+            try
+            {
+                var pdfFile = await _expenseReportService.GenerateExpenseMonthReport(id);
+
+                return File(pdfFile, "application/pdf", "ExpenseMonthReport.pdf");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error generating report: {ex.Message}");
+                return NotFound();
+            }
         }
     }
 }
