@@ -32,10 +32,15 @@ namespace expenceTracker.Services
                 .Where(e => e.expenceId == id)
                 .ToListAsync();
 
+            //separate expenses based on type
+            var variableExpectedExpenses = expectedExpenses.Where(e => e.type == "Variable").ToList();
+            var recurringExpectedExpenses = expectedExpenses.Where(e => e.type == "Recurring").ToList();
+
             var actualExpenses = await _context.actualExpences
                 .Where(e => e.expenceId == id)
                 .ToListAsync();
 
+            //get sum of expected and actual expense
             var totalExpectedExpense = expectedExpenses.Any() ? expectedExpenses.Sum(e => e.predictedCost) : 0;
             var totalActualExpense = actualExpenses.Any() ? actualExpenses.Sum(e => e.finalCost) : 0;
 
@@ -47,36 +52,61 @@ namespace expenceTracker.Services
 
                     page.Header()
                         .Text("Expense Month Report")
-                        .FontSize(11);
+                        .FontSize(11)
+                        .Bold()
+                        .FontSize(18);
 
                     page.Content().Column(column =>
                     {
-                        column.Item().Text($"Expense Month Details")
-                            .Bold()
-                            .FontSize(18);
+                        column.Spacing(0.5f, Unit.Centimetre);
 
-                        column.Item().Text($"Date: {expenseMonth.date:MMMM yyyy}");
-                        column.Item().Text($"Budget: ${expenseMonth.budget:0.00}");
-                        column.Item().Text($"Total Expected Expense: ${totalExpectedExpense:0.00}");
-                        column.Item().Text($"Total Actual Expense: ${totalActualExpense:0.00}");
+                        column.Item().Column(column =>
+                        {
+                            column.Item().Text($"Date: {expenseMonth.date:MMMM yyyy}");
+                            column.Item().Text($"Budget: ${expenseMonth.budget:0.00}");
+                            column.Item().Text($"Total Expected Expense: ${totalExpectedExpense:0.00}");
+                            column.Item().Text($"Total Actual Expense: ${totalActualExpense:0.00}");
+                        });
 
-                        column.Item().Text($"Expected Expenses")
+                        column.Item().Column(column =>
+                        {
+                            column.Item().Text($"Variable Expected Expenses")
                             .Bold()
                             .FontSize(14);
 
-                        foreach (var expense in expectedExpenses)
-                        {
-                            column.Item().Text($" > {expense.name}: ${expense.predictedCost:0.00}");
-                        }
+                            foreach (var expense in variableExpectedExpenses)
+                            {
+                                column.Item().Text($" > {expense.name}: ${expense.predictedCost:0.00}");
+                            }
+                        });
 
-                        column.Item().Text($"Actual Expenses")
-                            .Bold()
-                            .FontSize(14);
-
-                        foreach (var payment in actualExpenses)
+                        column.Item().Column(column =>
                         {
-                            column.Item().Text($" > {payment.category}: ${payment.finalCost:0.00}");
-                        }
+                            column.Item().Text($"Recurring Expected Expenses")
+                           .Bold()
+                           .FontSize(14);
+
+                            column.Item().Text($"*The cost presented is the calculated amount for the whole month")
+                                .Italic()
+                                .FontSize(8);
+
+                            foreach (var expense in recurringExpectedExpenses)
+                            {
+                                column.Item().Text($" > {expense.name}: ${expense.predictedCost:0.00} : {expense.frequency}");
+                            }
+                        });
+
+                        column.Item().Column(column =>
+                        {
+                            column.Item().Text($"Actual Expenses")
+                                .Bold()
+                                .FontSize(14);
+
+                            foreach (var payment in actualExpenses)
+                            {
+                                column.Item().Text($" > {payment.category}: ${payment.finalCost:0.00}");
+                            }
+                        });
                     });
                 });
             });
