@@ -33,9 +33,20 @@ namespace expenceTracker.Controllers
             return View();
         }
 
+        public IActionResult RegisterSuccess()
+        {
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Register(userRegisterDTO dto)
         {
+            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
+            if (existingUser != null)
+            {
+                ModelState.AddModelError("Email", "Email already in use.");
+                return View(dto);
+            }
             var user = new User
             {
                 Name = dto.Name,
@@ -47,7 +58,7 @@ namespace expenceTracker.Controllers
 
             await _context.SaveChangesAsync();
 
-            return Ok("user registered successfully");
+            return RedirectToAction("RegisterSuccess", "account");
         }
 
 

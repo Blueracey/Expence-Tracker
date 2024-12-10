@@ -126,7 +126,6 @@ namespace expenceTracker.Controllers
             }
             expectedExpences.monthlyExpence = monthlyExpence;
 
-            if (expectedExpences.type == "variable")
             //calculation of the predicted expense based on the frequency received 
             if (expectedExpences.frequency != null && expectedExpences.predictedCost != 0)
             {

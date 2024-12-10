@@ -1,0 +1,29 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "RegisterSuccess";
+}
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: auto;">
+<div class="card-body" style="max-width: 700px; width: 100%;">
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <p>Registration Successful.</p>
+        <a class="btn btn-primary" asp-area="" asp-controller="account" asp-action="Login">Continue to Login Page</a>
+    }
+    else
+    {
+        <ul>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="monthlyExpences" asp-action="Index">
+                    Continue to Expense Months
+                </a>
+            </li>
+        </ul>
+    }
+
+    <div class="text-center mt-3">
+    </div>
+</div>
+</div>
