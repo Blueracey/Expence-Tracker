@@ -153,7 +153,7 @@ namespace expenceTracker.Controllers
             }
 
             //Looks if an expected expense with a similar name exists
-            var existingName = await _context.expectedExpence.FirstOrDefaultAsync(e => e.name == expectedExpences.name);
+            var existingName = await _context.expectedExpence.FirstOrDefaultAsync(e => e.name == expectedExpences.name && e.expenceId == expectedExpences.expenceId);
             if (existingName != null)
             {
                 ModelState.AddModelError("name", "Expected Expense with same name already exists.");
